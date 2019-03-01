@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.LoginFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SignUpFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,76 +14,64 @@
             android:id="@+id/loginEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="99dp"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="202dp"
             android:layout_marginEnd="99dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:hint="@string/LoginFragment_loginEditText"
+            android:hint="@string/SignUpFragment_loginEditText"
             android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <EditText
             android:id="@+id/passwordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="98dp"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="415dp"
             android:ems="10"
-            android:hint="@string/LoginFragment_passwordEditText"
+            android:hint="@string/SignUpFragment_passwordEditText"
             android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginEditText" />
 
-        <Button
-            android:id="@+id/logInButton"
-            android:layout_width="210dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="162dp"
+        <EditText
+            android:id="@+id/repeatPasswordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
             android:layout_marginTop="22dp"
-            android:layout_marginEnd="162dp"
-            android:layout_marginBottom="342dp"
-            android:text="@string/LoginFragment_loginButton"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="344dp"
+            android:ems="10"
+            android:hint="@string/SignUpFragment_repeatPasswordEditText"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
-        <TextView
-            android:id="@+id/signUpTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="176dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="177dp"
-            android:layout_marginBottom="304dp"
-            android:text="@string/LoginFragment_signUpTextView"
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="210dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="162dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="162dp"
+            android:layout_marginBottom="270dp"
+            android:text="@string/SignUpFragment_signUpButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logInButton" />
+            app:layout_constraintTop_toBottomOf="@+id/repeatPasswordEditText" />
 
-        <TextView
-            android:id="@+id/wrongTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="176dp"
-            android:layout_marginTop="152dp"
-            android:layout_marginEnd="177dp"
-            android:layout_marginBottom="29dp"
-            android:text="@string/LoginFragment_wrongTextView"
-            android:textColor="@color/colorAccent"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toTopOf="@+id/loginEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

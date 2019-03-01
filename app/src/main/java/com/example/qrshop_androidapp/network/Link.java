@@ -12,4 +12,15 @@ public interface Link {
             @Field("login") String login,
             @Field("password") String password
     );
+    @FormUrlEncoded
+    @POST("second endpoint of the link here")
+    Call<Object> loginUser(
+            @Field("login") String login,
+            @Field("password") String password
+    );
+    @FormUrlEncoded
+    @POST("third endpoint of the link here")
+    Call<Object> findProduct(
+            @Field("identifier") String identifier
+    );
 }

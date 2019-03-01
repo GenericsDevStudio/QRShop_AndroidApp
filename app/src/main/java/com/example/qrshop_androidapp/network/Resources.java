@@ -7,21 +7,59 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Resources {
+
+    // INITIALIZATION
+
+    private static User currentUser;
     private final String SERVER_URL = "Link here";
-    Gson gson = new GsonBuilder().create();
-    Retrofit retrofit = new Retrofit.Builder()
+    private Gson gson = new GsonBuilder().create();
+    private Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVER_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
+    private Link link = retrofit.create(Link.class);
+
+    // METHODS
+
+    public static boolean registerUser(String name, String login, String password){
+        currentUser = new User(name, login, password);
+        // return true and set currentUser if registered on server
+        // return false if already exists or no internet connection
+        return true;
+    }
+    public static boolean loginUser(String login, String password){
+        // return true if login on server is successful
+        // return false if no such user or no internet connection
+        return true;
+    }
+    public static Product findProduct(String identifier){
+        // find product by identifier on server
+        // return Product if found
+        // return null if no such product
+        return new Product("1234567", "Jacket", "250");
+    }
+
+    public static User getCurrentUser(){return currentUser;}
+
 }
 class User {
+    // INITIALIZATION
+
     private String id;
     private String name;
     private String login;
     private String password;
     private String cash;
 
+    User(String name, String login, String password){
+        this.name = name; this.login = login; this.password = password;
+        // get id, cash from server
+        id = "1";
+        cash = "1000";
+    }
+
     //
+    // GETTERS
     //
 
     public String getCash() {
@@ -44,26 +82,6 @@ class User {
         return password;
     }
 
-    public void setCash(String cash) {
-        this.cash = cash;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     //
     //
 
@@ -71,13 +89,20 @@ class User {
 
 
 class Product {
+
+    // INITIALIZATION
+
     private String identifier;
     private String name;
     private String price;
 
-    //
-    //
+    Product(String identifier, String name, String price){
+        this.identifier = identifier; this.name = name; this.price = price;
+    }
 
+    //
+    // GETTERS
+    //
 
     public String getName() {
         return name;
@@ -90,17 +115,6 @@ class Product {
     public String getPrice() {
         return price;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setIdentifier(String identifier) {
-
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
 }
+
 

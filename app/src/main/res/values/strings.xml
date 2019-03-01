@@ -1,6 +1,15 @@
 <resources>
-    <string name="app_name">QRShop_AndroidApp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">QRShop_AndroidApp</string>
+    <string name="very_cool_design">Very cool design!</string>
+    <string name="LoginFragment_loginEditText">Login</string>
+    <string name="LoginFragment_passwordEditText">Password</string>
+    <string name="LoginFragment_loginButton">Login</string>
+    <string name="LoginFragment_signUpTextView">Sign Up</string>
+    <string name="LoginFragment_wrongTextView">Wrong login or password</string>
+    <string name="SignUpFragment_loginEditText">Login</string>
+    <string name="SignUpFragment_passwordEditText">Password</string>
+    <string name="SignUpFragment_repeatPasswordEditText">Repeat password</string>
+    <string name="SignUpFragment_signUpButton">Sign Up</string>
+
 </resources>
