@@ -7,13 +7,13 @@ import retrofit2.http.POST;
 
 public interface Link {
     @FormUrlEncoded
-    @POST("Endpoint of the link here")
+    @POST("api/adduserqr")
     Call<Object> registerUser(
             @Field("login") String login,
             @Field("password") String password
     );
     @FormUrlEncoded
-    @POST("second endpoint of the link here")
+    @POST("api/fdqr")
     Call<Object> loginUser(
             @Field("login") String login,
             @Field("password") String password

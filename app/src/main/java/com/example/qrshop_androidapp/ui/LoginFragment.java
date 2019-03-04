@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qrshop_androidapp.R;
 import com.example.qrshop_androidapp.network.Resources;
@@ -53,14 +54,14 @@ public class LoginFragment extends Fragment {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Resources.loginUser(loginEditText.getText().toString(), passwordEditText.getText().toString())){
-                    FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainLayout, new MainMenuFragment());
-                    transaction.commit();
-                    wrongTextView.setVisibility(View.INVISIBLE);
-                }else{
-                    wrongTextView.setVisibility(View.VISIBLE);
-                }
+                    if (Resources.loginUser(loginEditText.getText().toString(), passwordEditText.getText().toString())) {
+                        FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.mainLayout, new MainMenuFragment());
+                        transaction.commit();
+                        wrongTextView.setVisibility(View.INVISIBLE);
+                    } else {
+                        wrongTextView.setVisibility(View.VISIBLE);
+                    }
             }
         });
         signUpTextView.setOnClickListener(new View.OnClickListener() {
