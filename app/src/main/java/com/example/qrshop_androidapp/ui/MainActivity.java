@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.qrshop_androidapp.R;
 
 public class MainActivity extends AppCompatActivity {
-
+// TODO: RENAME DATA 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
