@@ -3,6 +3,7 @@ package com.example.qrshop_androidapp.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -31,6 +32,7 @@ public class LoginFragment extends Fragment {
     private Button logInButton;
     private TextView wrongTextView;
     private TextView signUpTextView;
+    public static boolean checker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,16 +56,45 @@ public class LoginFragment extends Fragment {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ////////////////////////////////////////
+                // LOGIN
+
+                if (!loginEditText.getText().toString().isEmpty() && !passwordEditText.getText().toString().isEmpty()) {
                     if (Resources.loginUser(loginEditText.getText().toString(), passwordEditText.getText().toString())) {
-                        FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.mainLayout, new MainMenuFragment());
-                        transaction.commit();
-                        wrongTextView.setVisibility(View.INVISIBLE);
-                    } else {
-                        wrongTextView.setVisibility(View.VISIBLE);
+                        CountDownTimer count = new CountDownTimer(10000, 10) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                if (Resources.getCurrentUser() != null) {
+                                    if(checker) {
+                                        wrongTextView.setVisibility(View.INVISIBLE);
+                                        FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.mainLayout, new MainMenuFragment());
+                                        transaction.commit();
+                                        cancel();
+                                    }
+                                }else if(Resources.getCurrentUser() == null && checker){
+                                    wrongTextView.setVisibility(View.VISIBLE);
+                                    cancel();
+                                }
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Toast.makeText(main.getBaseContext(), "Connection timeout", Toast.LENGTH_SHORT).show();
+                                cancel();
+                            }
+                        };
+                        count.start();
                     }
+                } else {
+                    Toast.makeText(main.getBaseContext(), "One or both of the fields is empty", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+                ////////////////////////////////////////
+
         signUpTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +106,7 @@ public class LoginFragment extends Fragment {
         return rootView;
     }
 
-    // IMPORTANT METHOD, MUST BE IN EVERY FRAGMENT
+    // FRAGMENT ACTIVITY
 
     @Override
     public void onAttach(Context context) {

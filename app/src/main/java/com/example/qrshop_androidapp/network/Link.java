@@ -10,7 +10,8 @@ public interface Link {
     @POST("api/adduserqr")
     Call<Object> registerUser(
             @Field("login") String login,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("name") String name
     );
     @FormUrlEncoded
     @POST("api/fdqr")
