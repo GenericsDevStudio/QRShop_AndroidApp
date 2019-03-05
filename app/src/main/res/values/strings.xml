@@ -12,5 +12,8 @@
     <string name="SignUpFragment_repeatPasswordEditText">Repeat password</string>
     <string name="SignUpFragment_signUpButton">Sign Up</string>
     <string name="SignUpFragment_nameEditText">Name</string>
+    <string name="SettingsMenuBtn">Settings</string>
+    <string name="CartMenuBtn">Cart</string>
+    <string name="ExitMenuBtn">Exit</string>
 
 </resources>
