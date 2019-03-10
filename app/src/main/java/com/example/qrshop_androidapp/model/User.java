@@ -1,4 +1,4 @@
-package com.example.qrshop_androidapp.data;
+package com.example.qrshop_androidapp.model;
 
 public class User {
     // INITIALIZATION

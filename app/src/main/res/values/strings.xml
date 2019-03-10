@@ -12,8 +12,13 @@
     <string name="SignUpFragment_repeatPasswordEditText">Repeat password</string>
     <string name="SignUpFragment_signUpButton">Sign Up</string>
     <string name="SignUpFragment_nameEditText">Name</string>
-    <string name="SettingsMenuBtn">Settings</string>
-    <string name="CartMenuBtn">Cart</string>
-    <string name="ExitMenuBtn">Exit</string>
+    <string name="MainMenuFragment_SettingsMenuBtn">Settings</string>
+    <string name="MainMenuFragment_CartMenuBtn">Cart</string>
+    <string name="MainMenuFragment_ExitMenuBtn">Exit</string>
+    <string name="MainMenuFragment_UserNameTextView">currentUserName</string>
+    <string name="MainMenuFragment_cashTextView">currentUserCash</string>
+    <string name="MainMenuFragment_cartCountTextView">productsInCartCount</string>
+    <string name="MainMenuFragment_addNewToCartButton">Add new to cart</string>
+    <string name="MainMenuFragment_finishPaymentButton">Finish payment</string>
 
 </resources>

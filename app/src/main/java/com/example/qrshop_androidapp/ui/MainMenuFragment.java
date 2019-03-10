@@ -1,17 +1,23 @@
 package com.example.qrshop_androidapp.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.qrshop_androidapp.R;
+import com.example.qrshop_androidapp.model.Cart;
 import com.example.qrshop_androidapp.network.Resources;
 
 
@@ -22,7 +28,23 @@ public class MainMenuFragment extends Fragment {
 
     // FIELDS
 
+    private FragmentActivity main;
     private View rootView;
+    private TextView userNameTextView;
+    private TextView userCashTextView;
+    private TextView cartCountTextView;
+    private Button addNewToCartButton;
+    private Button finishPaymentButton;
+    private String userName = Resources.getCurrentUser().getName();
+    private String userCash = Resources.getCurrentUser().getCash() + " " + "Dollars";
+
+    // CART
+
+    static final Cart currentCart = new Cart();
+    private String inCart = currentCart.getProductsInCartCount() + " " + "In Cart";
+
+    ////
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,8 +56,37 @@ public class MainMenuFragment extends Fragment {
 
         // INITIALIZATION
 
+        userNameTextView = rootView.findViewById(R.id.userNameTextView);
+        userNameTextView.setText(userName);
+        userCashTextView = rootView.findViewById(R.id.userCashTextView);
+        userCashTextView.setText(userCash);
+        cartCountTextView = rootView.findViewById(R.id.cartCountTextView);
+        cartCountTextView.setText(inCart);
+        addNewToCartButton = rootView.findViewById(R.id.addNewToCartButton);
+        finishPaymentButton = rootView.findViewById(R.id.finishPaymentButton);
+
+        // ON CLICK LISTENERS
+
+        addNewToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.mainLayout, new CameraFragment());
+                transaction.commit();
+            }
+        });
+
+        finishPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(main.getBaseContext(), "Not finished", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return rootView;
     }
+
+    // TOOLBAR INITIALIZATION
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -63,5 +114,11 @@ public class MainMenuFragment extends Fragment {
         }
 
         return false;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        main = getActivity();
     }
 }

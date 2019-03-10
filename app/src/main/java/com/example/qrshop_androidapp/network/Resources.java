@@ -1,8 +1,8 @@
 package com.example.qrshop_androidapp.network;
 
 import android.util.Log;
-import com.example.qrshop_androidapp.data.Product;
-import com.example.qrshop_androidapp.data.User;
+import com.example.qrshop_androidapp.model.Product;
+import com.example.qrshop_androidapp.model.User;
 import com.example.qrshop_androidapp.ui.LoginFragment;
 import com.example.qrshop_androidapp.ui.SignUpFragment;
 import com.google.gson.Gson;
@@ -14,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Resources {
+
     // INITIALIZATION
 
     private static User currentUser;
@@ -24,6 +25,7 @@ public class Resources {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
     private static Link link = retrofit.create(Link.class);
+
     // METHODS
 
     public static boolean registerUser(String login, String password, String name) {
@@ -45,6 +47,7 @@ public class Resources {
         });
         return true;
     }
+
 
     public static boolean loginUser(final String login, final String password) {
         currentUser = null;

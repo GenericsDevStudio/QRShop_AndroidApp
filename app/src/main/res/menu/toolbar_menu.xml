@@ -7,14 +7,14 @@
 
     <item
         android:id="@+id/settingsMenuBtn"
-        android:title="@string/SettingsMenuBtn"
+        android:title="@string/MainMenuFragment_SettingsMenuBtn"
         app:showAsAction="never"/>
     <item
         android:id="@+id/cartMenuBtn"
-        android:title="@string/CartMenuBtn"
+        android:title="@string/MainMenuFragment_CartMenuBtn"
         app:showAsAction="never"/>
     <item
         android:id="@+id/exitMenuBtn"
-        android:title="@string/ExitMenuBtn"
+        android:title="@string/MainMenuFragment_ExitMenuBtn"
         app:showAsAction="never"/>
 </menu>
