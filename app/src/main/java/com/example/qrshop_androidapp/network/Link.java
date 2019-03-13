@@ -20,8 +20,9 @@ public interface Link {
             @Field("password") String password
     );
     @FormUrlEncoded
-    @POST("third endpoint of the link here")
+    @POST("api/buy")
     Call<Object> findProduct(
-            @Field("identifier") String identifier
+            @Field("code") String code,
+            @Field("id") String id
     );
 }

@@ -99,7 +99,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.mainLayout, new SignUpFragment());
+                        .replace(R.id.mainLayout, new SignUpFragment())
+                        .addToBackStack(null);
                 transaction.commit();
             }
         });

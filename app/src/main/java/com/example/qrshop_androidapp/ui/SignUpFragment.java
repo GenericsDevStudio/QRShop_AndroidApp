@@ -67,7 +67,8 @@ public class SignUpFragment extends Fragment {
                                     if(registeredChecker){
                                         Toast.makeText(main.getBaseContext(), "You can now login!", Toast.LENGTH_SHORT).show();
                                         FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                                                .replace(R.id.mainLayout, new LoginFragment());
+                                                .replace(R.id.mainLayout, new LoginFragment())
+                                                .addToBackStack(null);
                                         transaction.commit();
                                         cancel();
                                     }

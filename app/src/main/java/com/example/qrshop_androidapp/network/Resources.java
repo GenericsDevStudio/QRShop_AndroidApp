@@ -1,6 +1,9 @@
 package com.example.qrshop_androidapp.network;
 
+import android.os.CountDownTimer;
 import android.util.Log;
+
+import com.example.qrshop_androidapp.model.Cart;
 import com.example.qrshop_androidapp.model.Product;
 import com.example.qrshop_androidapp.model.User;
 import com.example.qrshop_androidapp.ui.LoginFragment;
@@ -18,6 +21,7 @@ public class Resources {
     // INITIALIZATION
 
     private static User currentUser;
+    private static Cart currentCart = new Cart();
     private static final String SERVER_URL = "http://vasylko.zzz.com.ua/index.php/";
     private static Gson gson = new GsonBuilder().create();
     private static Retrofit retrofit = new Retrofit.Builder()
@@ -25,6 +29,11 @@ public class Resources {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
     private static Link link = retrofit.create(Link.class);
+
+    // FIELDS FOR findProduct METHOD
+
+    private static Product toReturn;
+    private static boolean findingFinished;
 
     // METHODS
 
@@ -81,11 +90,63 @@ public class Resources {
 
     public static User getCurrentUser() {return currentUser; }
 
-    public static Product findProduct(String identifier) {
-        // find product by identifier on server
-        // return Product if found
-        // return null if no such product
-        return new Product("1234567", "Jacket", "250");
+    public static Cart getCurrentCart() { return currentCart; }
+
+    // METHOD FOR TESTING
+
+    public static void addToCart(Product toAdd){
+        currentCart.addToCart(toAdd);
+    }
+
+    //
+    // REMOVING PRODUCT IN CART
+
+    public static void removeFromCart(int position){
+        currentCart.removeFromCart(position);
+    }
+
+    //
+
+    public static Product findProduct(String code) {
+        toReturn = null;
+        findingFinished = false;
+        Call<Object> call = link.findProduct(code, getCurrentUser().getId());
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Product check = gson.fromJson(response.body().toString(), Product.class);
+                if(check.getIdentifier() != null && check.getName() != null && check.getPrice() != null){
+                    toReturn = check;
+                    findingFinished = true;
+                }else{
+                    toReturn = null;
+                    findingFinished = true;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("ONFAILURE : ", t.getMessage());
+            }
+        });
+        CountDownTimer count = new CountDownTimer(10000, 10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if(findingFinished){
+                    currentCart.addToCart(toReturn);
+                    // FLAG
+                    cancel();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                // FLAG
+                cancel();
+            }
+        };
+        count.start();
+        return toReturn;
     }
 }
 

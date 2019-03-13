@@ -7,15 +7,20 @@ public class Cart {
 
     // INITIALIZATION
 
-    private int productsInCartCount = 0;
+    private List<Product> productsInCart = new ArrayList<>();
 
-    List<Product> productsInCart = new ArrayList<>();
+    private int productsInCartCount = productsInCart.size();
 
     // METHODS
 
     public void addToCart(Product toAdd){
         productsInCart.add(toAdd);
         productsInCartCount++;
+    }
+
+    public void removeFromCart(int position){
+        productsInCart.remove(position);
+        productsInCartCount--;
     }
 
     // GETTERS

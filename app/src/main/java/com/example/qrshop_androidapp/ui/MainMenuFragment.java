@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.qrshop_androidapp.R;
 import com.example.qrshop_androidapp.model.Cart;
@@ -40,8 +39,7 @@ public class MainMenuFragment extends Fragment {
 
     // CART
 
-    static final Cart currentCart = new Cart();
-    private String inCart = currentCart.getProductsInCartCount() + " " + "In Cart";
+    private static final Cart currentCart = Resources.getCurrentCart();
 
     ////
 
@@ -49,13 +47,16 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setHasOptionsMenu(true);
+
         // INFLATING
 
         rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
         // INITIALIZATION
 
+        String inCart = currentCart.getProductsInCartCount() + " " + "In Cart";
         userNameTextView = rootView.findViewById(R.id.userNameTextView);
         userNameTextView.setText(userName);
         userCashTextView = rootView.findViewById(R.id.userCashTextView);
@@ -79,7 +80,10 @@ public class MainMenuFragment extends Fragment {
         finishPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(main.getBaseContext(), "Not finished", Toast.LENGTH_SHORT).show();
+                FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.mainLayout, new CartViewingFragment())
+                        .addToBackStack(null);
+                transaction.commit();
             }
         });
 

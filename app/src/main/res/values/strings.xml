@@ -20,5 +20,6 @@
     <string name="MainMenuFragment_cartCountTextView">productsInCartCount</string>
     <string name="MainMenuFragment_addNewToCartButton">Add new to cart</string>
     <string name="MainMenuFragment_finishPaymentButton">Finish payment</string>
+    <string name="CartList_standardString">null</string>
 
 </resources>
