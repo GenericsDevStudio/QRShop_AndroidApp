@@ -2,17 +2,24 @@ package com.example.qrshop_androidapp.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.qrshop_androidapp.R;
 import com.example.qrshop_androidapp.model.Product;
 import com.example.qrshop_androidapp.network.Resources;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import static com.example.qrshop_androidapp.ui.MainMenuFragment.bought;
 
 public class CameraFragment extends Fragment {
     public CameraFragment() {
@@ -21,6 +28,7 @@ public class CameraFragment extends Fragment {
 
     // FIELDS
 
+    private IntentIntegrator qrScan;
     private View rootView;
     private FragmentActivity main;
 
@@ -34,14 +42,31 @@ public class CameraFragment extends Fragment {
 
         // INITIALIZATION
 
-        Resources.addToCart(new Product("1", "Jacket", "250"));
-
-        FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.mainLayout, new MainMenuFragment());
-        transaction.commit();
+        qrScan = new IntentIntegrator(main);
 
         return rootView;
     }
+
+    // CAMERA PREVIEW
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        qrScan.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        qrScan.setPrompt("Scan");
+        qrScan.setCameraId(0);
+        qrScan.setBeepEnabled(false);
+        qrScan.setBarcodeImageEnabled(false);
+        qrScan.initiateScan();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        qrScan.setTimeout(0);
+    }
+
+    // GETTING ACTIVITY
 
     @Override
     public void onAttach(Context context) {

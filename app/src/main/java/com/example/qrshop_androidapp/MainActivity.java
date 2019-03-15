@@ -1,14 +1,30 @@
 package com.example.qrshop_androidapp;
 
+import android.content.Intent;
+import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.qrshop_androidapp.R;
+import com.example.qrshop_androidapp.network.Resources;
+import com.example.qrshop_androidapp.ui.CameraFragment;
+import com.example.qrshop_androidapp.ui.CartViewingFragment;
 import com.example.qrshop_androidapp.ui.LoginFragment;
+import com.example.qrshop_androidapp.ui.MainMenuFragment;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import static com.example.qrshop_androidapp.ui.MainMenuFragment.bought;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    // TODO: FIX SCREEN ROTATION ON CameraFragment
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                  .beginTransaction().replace(R.id.mainLayout, new LoginFragment());
          transaction.commit();
     }
+
+    // BACK BUTTON IMPLEMENTATION
 
     @Override
     public void onBackPressed() {
@@ -48,5 +66,20 @@ public class MainActivity extends AppCompatActivity {
         //This method is called when the up button is pressed. Just the pop back stack.
         getSupportFragmentManager().popBackStack();
         return true;
+    }
+
+    // QR CODE RESULT HANDLER
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null){
+            Resources.findProduct(result.getContents());
+            MainMenuFragment.checker = true;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainLayout, new MainMenuFragment());
+            transaction.commit();
+        }
     }
 }

@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
 
                 if (!loginEditText.getText().toString().isEmpty() && !passwordEditText.getText().toString().isEmpty()) {
                     if (Resources.loginUser(loginEditText.getText().toString(), passwordEditText.getText().toString())) {
-                        CountDownTimer count = new CountDownTimer(10000, 10) {
+                        CountDownTimer waitForResponse = new CountDownTimer(10000, 10) {
                             @Override
                             public void onTick(long millisUntilFinished) {
                                 if (Resources.getCurrentUser() != null) {
@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment {
                                 cancel();
                             }
                         };
-                        count.start();
+                        waitForResponse.start();
                     }
                 } else {
                     Toast.makeText(main.getBaseContext(), "One or both of the fields is empty", Toast.LENGTH_SHORT).show();

@@ -2,7 +2,9 @@ package com.example.qrshop_androidapp.ui;
 
 
 import android.content.Context;
+import android.graphics.Camera;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.qrshop_androidapp.R;
 import com.example.qrshop_androidapp.model.Cart;
@@ -36,6 +39,8 @@ public class MainMenuFragment extends Fragment {
     private Button finishPaymentButton;
     private String userName = Resources.getCurrentUser().getName();
     private String userCash = Resources.getCurrentUser().getCash() + " " + "Dollars";
+    public static boolean checker;
+    public static Boolean bought;
 
     // CART
 
@@ -55,6 +60,28 @@ public class MainMenuFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
         // INITIALIZATION
+
+        if(checker){
+            CountDownTimer waitForResponse = new CountDownTimer(10000, 10) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    if(bought != null){
+                        if(bought){
+                            Toast.makeText(main.getBaseContext(), "Successfully bought", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(main.getBaseContext(), "Buying failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+                    Toast.makeText(main.getBaseContext(), "Connection timeout", Toast.LENGTH_SHORT).show();
+                    cancel();
+                }
+            };
+            waitForResponse.start();
+        }
 
         String inCart = currentCart.getProductsInCartCount() + " " + "In Cart";
         userNameTextView = rootView.findViewById(R.id.userNameTextView);

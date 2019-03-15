@@ -7,6 +7,7 @@ import com.example.qrshop_androidapp.model.Cart;
 import com.example.qrshop_androidapp.model.Product;
 import com.example.qrshop_androidapp.model.User;
 import com.example.qrshop_androidapp.ui.LoginFragment;
+import com.example.qrshop_androidapp.ui.MainMenuFragment;
 import com.example.qrshop_androidapp.ui.SignUpFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,7 +34,6 @@ public class Resources {
     // FIELDS FOR findProduct METHOD
 
     private static Product toReturn;
-    private static boolean findingFinished;
 
     // METHODS
 
@@ -108,19 +108,19 @@ public class Resources {
     //
 
     public static Product findProduct(String code) {
+        MainMenuFragment.bought = null;
         toReturn = null;
-        findingFinished = false;
         Call<Object> call = link.findProduct(code, getCurrentUser().getId());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Product check = gson.fromJson(response.body().toString(), Product.class);
-                if(check.getIdentifier() != null && check.getName() != null && check.getPrice() != null){
+                if(check.getIdentifier() != null){
                     toReturn = check;
-                    findingFinished = true;
+                    MainMenuFragment.bought = true;
                 }else{
                     toReturn = null;
-                    findingFinished = true;
+                    MainMenuFragment.bought = false;
                 }
             }
 
@@ -129,23 +129,6 @@ public class Resources {
                 Log.d("ONFAILURE : ", t.getMessage());
             }
         });
-        CountDownTimer count = new CountDownTimer(10000, 10) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if(findingFinished){
-                    currentCart.addToCart(toReturn);
-                    // FLAG
-                    cancel();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                // FLAG
-                cancel();
-            }
-        };
-        count.start();
         return toReturn;
     }
 }
