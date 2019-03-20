@@ -61,15 +61,12 @@ public class SignUpFragment extends Fragment {
                         && !nameEditText.getText().toString().isEmpty()) {
                     if(passwordEditText.getText().toString().equals(repeatPasswordEditText.getText().toString())){
                         if(Resources.registerUser(loginEditText.getText().toString(), repeatPasswordEditText.getText().toString(), nameEditText.getText().toString())){
-                            CountDownTimer count = new CountDownTimer(10000, 10) {
+                            CountDownTimer count = new CountDownTimer(5000, 10) {
                                 @Override
                                 public void onTick(long millisUntilFinished) {
                                     if(registeredChecker){
                                         Toast.makeText(main.getBaseContext(), "You can now login!", Toast.LENGTH_SHORT).show();
-                                        FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                                                .replace(R.id.mainLayout, new LoginFragment())
-                                                .addToBackStack(null);
-                                        transaction.commit();
+                                        main.getSupportFragmentManager().popBackStack();
                                         cancel();
                                     }
                                 }
@@ -82,6 +79,8 @@ public class SignUpFragment extends Fragment {
                             };
                             count.start();
                         }
+                    }else{
+                        Toast.makeText(main.getBaseContext(), "Passwords are not matching", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(main.getBaseContext(), "One or several fields are not filled", Toast.LENGTH_SHORT).show();

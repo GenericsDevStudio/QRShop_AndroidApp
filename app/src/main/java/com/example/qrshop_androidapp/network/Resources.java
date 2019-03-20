@@ -11,6 +11,9 @@ import com.example.qrshop_androidapp.ui.MainMenuFragment;
 import com.example.qrshop_androidapp.ui.SignUpFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +36,6 @@ public class Resources {
 
     // FIELDS FOR findProduct METHOD
 
-    private static Product toReturn;
 
     // METHODS
 
@@ -92,13 +94,6 @@ public class Resources {
 
     public static Cart getCurrentCart() { return currentCart; }
 
-    // METHOD FOR TESTING
-
-    public static void addToCart(Product toAdd){
-        currentCart.addToCart(toAdd);
-    }
-
-    //
     // REMOVING PRODUCT IN CART
 
     public static void removeFromCart(int position){
@@ -107,19 +102,17 @@ public class Resources {
 
     //
 
-    public static Product findProduct(String code) {
+    public static void findProduct(String code) {
         MainMenuFragment.bought = null;
-        toReturn = null;
         Call<Object> call = link.findProduct(code, getCurrentUser().getId());
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Product check = gson.fromJson(response.body().toString(), Product.class);
-                if(check.getIdentifier() != null){
-                    toReturn = check;
+                if(check.getName() != null && check.getIdentifier() != null && check.getPrice() != null){
+                    currentCart.addToCart(check);
                     MainMenuFragment.bought = true;
                 }else{
-                    toReturn = null;
                     MainMenuFragment.bought = false;
                 }
             }
@@ -129,7 +122,6 @@ public class Resources {
                 Log.d("ONFAILURE : ", t.getMessage());
             }
         });
-        return toReturn;
     }
 }
 

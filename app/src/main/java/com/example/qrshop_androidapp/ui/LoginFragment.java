@@ -62,14 +62,14 @@ public class LoginFragment extends Fragment {
 
                 if (!loginEditText.getText().toString().isEmpty() && !passwordEditText.getText().toString().isEmpty()) {
                     if (Resources.loginUser(loginEditText.getText().toString(), passwordEditText.getText().toString())) {
-                        CountDownTimer waitForResponse = new CountDownTimer(10000, 10) {
+                        CountDownTimer waitForResponse = new CountDownTimer(5000, 10) {
                             @Override
                             public void onTick(long millisUntilFinished) {
                                 if (Resources.getCurrentUser() != null) {
                                     if(checker) {
                                         wrongTextView.setVisibility(View.INVISIBLE);
                                         FragmentTransaction transaction = main.getSupportFragmentManager().beginTransaction()
-                                                .replace(R.id.mainLayout, new MainMenuFragment());
+                                                .replace(R.id.mainLayout, new MainMenuFragment(), "MainMenuAfterLogin");
                                         transaction.commit();
                                         cancel();
                                     }

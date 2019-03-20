@@ -26,11 +26,14 @@ public class MainActivity extends AppCompatActivity {
     // TODO: FIX SCREEN ROTATION ON CameraFragment
 
 
+    FragmentManager afterQr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         shouldDisplayHomeUp();
+        afterQr  = getSupportFragmentManager();
         FragmentManager fm = getSupportFragmentManager();
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -77,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
         if(result != null){
             Resources.findProduct(result.getContents());
             MainMenuFragment.checker = true;
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.mainLayout, new MainMenuFragment());
-            transaction.commit();
+            FragmentTransaction transaction = afterQr.beginTransaction()
+                    .replace(R.id.mainLayout, new MainMenuFragment(), "MainMenuAfterQr");
+            transaction.commitAllowingStateLoss();
         }
     }
 }

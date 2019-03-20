@@ -59,29 +59,47 @@ public class MainMenuFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        // INITIALIZATION
-
         if(checker){
-            CountDownTimer waitForResponse = new CountDownTimer(10000, 10) {
+            CountDownTimer waitForResponse = new CountDownTimer(5000, 10) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     if(bought != null){
                         if(bought){
                             Toast.makeText(main.getBaseContext(), "Successfully bought", Toast.LENGTH_SHORT).show();
+
+                            // REFRESHING CURRENT FRAGMENT TO GET ACTUAL INFO ABOUT CURRENT CART
+
+                            Fragment current = main.getSupportFragmentManager().findFragmentByTag("MainMenuAfterQr");
+                            FragmentTransaction refresh = main.getSupportFragmentManager().beginTransaction()
+                                    .detach(current)
+                                    .attach(current);
+                            refresh.commit();
+
+                            //
+
+                            bought = null;
+                            checker = false;
+                            cancel();
                         }else{
                             Toast.makeText(main.getBaseContext(), "Buying failed", Toast.LENGTH_SHORT).show();
+                            bought = null;
+                            checker = false;
+                            cancel();
                         }
                     }
                 }
 
                 @Override
                 public void onFinish() {
-                    Toast.makeText(main.getBaseContext(), "Connection timeout", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(main.getBaseContext(), "Buying failed", Toast.LENGTH_SHORT).show();
+                    checker = false;
                     cancel();
                 }
             };
             waitForResponse.start();
         }
+
+        // INITIALIZATION
 
         String inCart = currentCart.getProductsInCartCount() + " " + "In Cart";
         userNameTextView = rootView.findViewById(R.id.userNameTextView);
